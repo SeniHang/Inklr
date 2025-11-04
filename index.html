@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inklr Mobile Portfolio</title>
+    <title>Inklr - Dual Dashboard Demo</title>
     <style>
         * {
             margin: 0;
@@ -12,421 +12,788 @@
         }
 
         body {
-            background: #e8e8e8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0d3b2c 0%, #2C5F2D 100%);
             min-height: 100vh;
-            font-family: Arial, sans-serif;
             padding: 20px;
         }
 
-        .phone-frame {
-            width: 375px;
-            height: 812px;
-            background: #000;
-            border-radius: 40px;
-            padding: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            position: relative;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .phone-notch {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 30px;
-            background: #000;
-            border-radius: 0 0 20px 20px;
-            z-index: 10;
-        }
-
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #FFFFFF;
-            border-radius: 32px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* App Header */
-        .app-header {
-            background: linear-gradient(135deg, #1E5128 0%, #0D2818 100%);
-            padding: 50px 20px 20px 20px;
-            color: white;
-        }
-
-        .app-header .logo {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .search-bar {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 10px 15px;
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
         }
 
-        .search-bar input {
-            background: none;
-            border: none;
-            color: white;
-            flex: 1;
-            font-size: 14px;
-            outline: none;
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2C5F2D;
         }
 
-        .search-bar input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Profile Section */
-        .profile-section {
-            padding: 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .profile-header {
+        .user-info {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 15px;
         }
 
-        .avatar {
-            width: 60px;
-            height: 60px;
-            background: #4E9F3D;
+        .user-avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            background: linear-gradient(135deg, #2C5F2D 0%, #1e4620 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 24px;
-            font-weight: 700;
+            font-weight: bold;
         }
 
-        .profile-info h2 {
-            font-size: 18px;
-            color: #191A19;
-            margin-bottom: 4px;
+        .dashboard-toggle {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
-        .profile-info p {
-            font-size: 13px;
+        .toggle-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
             color: #666;
         }
 
-        .profile-stats {
-            display: flex;
-            gap: 20px;
-            margin-top: 15px;
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #2C5F2D 0%, #1e4620 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.4);
         }
 
-        .stat {
-            text-align: center;
+        .dashboard-content {
+            display: none;
+        }
+
+        .dashboard-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
         }
 
         .stat-number {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1E5128;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #666;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-
-        /* Tab Navigation */
-        .tab-nav {
-            display: flex;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 0 20px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 15px 0;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 600;
-            color: #666;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .tab.active {
-            color: #1E5128;
-            border-bottom-color: #1E5128;
-        }
-
-        /* Portfolio Grid */
-        .portfolio-grid {
-            padding: 15px;
-        }
-
-        .portfolio-item {
-            background: #F5F5F5;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid #4E9F3D;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 10px;
-        }
-
-        .item-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #191A19;
+            font-size: 36px;
+            font-weight: bold;
+            color: #2C5F2D;
             margin-bottom: 5px;
         }
 
-        .item-meta {
+        .stat-label {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: #22c55e;
+            margin-top: 5px;
+        }
+
+        .content-list {
+            list-style: none;
+        }
+
+        .content-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-info h4 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .content-meta {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
             font-size: 11px;
-            color: #666;
+            font-weight: 600;
+        }
+
+        .badge-public {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .badge-monetized {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .badge-premium {
+            background: #fef3c7;
+            color: #d97706;
         }
 
         .price-tag {
-            background: #1E5128;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2C5F2D;
         }
 
-        .price-tag.free {
-            background: #4E9F3D;
-        }
-
-        .item-description {
-            font-size: 13px;
-            color: #444;
-            line-height: 1.5;
-            margin-bottom: 10px;
-        }
-
-        .item-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: white;
-            color: #1E5128;
-            padding: 4px 10px;
+        .btn {
+            padding: 10px 20px;
+            border: none;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .item-stats {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #e0e0e0;
-            font-size: 12px;
+        .btn-primary {
+            background: linear-gradient(135deg, #2C5F2D 0%, #1e4620 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
             color: #666;
         }
 
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #e0e0e0;
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2C5F2D 0%, #1e4620 100%);
+            transition: width 0.3s ease;
+        }
+
+        .chart-container {
+            height: 200px;
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
             display: flex;
-            padding: 10px 0 20px 0;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 10px;
         }
 
-        .nav-item {
+        .chart-bar {
             flex: 1;
+            background: linear-gradient(180deg, #2C5F2D 0%, #1e4620 100%);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar:hover {
+            opacity: 0.8;
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #888;
+            white-space: nowrap;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-card {
+            padding: 20px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2C5F2D 0%, #1e4620 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-align: center;
-            padding: 8px 0;
         }
 
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            background: #ccc;
-            border-radius: 50%;
-            margin: 0 auto 4px auto;
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(44, 95, 45, 0.4);
         }
 
-        .nav-item.active .nav-icon {
-            background: #1E5128;
+        .action-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
-        .nav-label {
-            font-size: 10px;
-            color: #999;
-        }
-
-        .nav-item.active .nav-label {
-            color: #1E5128;
+        .action-title {
+            font-size: 14px;
             font-weight: 600;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: bold;
+            color: #22c55e;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.3;
         }
     </style>
 </head>
 <body>
-    <div class="phone-frame">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-            <!-- App Header -->
-            <div class="app-header">
-                <div class="logo">Inklr</div>
-                <div class="search-bar">
-                    <span>ðŸ”</span>
-                    <input type="text" placeholder="Search research, papers...">
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Inklr</div>
+            <div class="user-info">
+                <span style="color: #666;">Welcome back, Sarah!</span>
+                <div class="user-avatar">SM</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Toggle -->
+        <div class="dashboard-toggle">
+            <button class="toggle-btn active" onclick="showDashboard('portfolio')">
+                ðŸ“Š Public Portfolio
+            </button>
+            <button class="toggle-btn" onclick="showDashboard('monetization')">
+                ðŸ’° Monetization Hub
+            </button>
+        </div>
+
+        <!-- Public Portfolio Dashboard -->
+        <div id="portfolio-dashboard" class="dashboard-content active">
+            <div class="dashboard-grid">
+                <!-- Profile Views Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Profile Views</div>
+                        <div class="card-icon" style="background: #dbeafe; color: #2563eb;">ðŸ‘ï¸</div>
+                    </div>
+                    <div class="stat-number">2,847</div>
+                    <div class="stat-label">Total views this month</div>
+                    <div class="stat-change">â†— +23% from last month</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+
+                <!-- Engagement Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Engagement</div>
+                        <div class="card-icon" style="background: #fef3c7; color: #d97706;">â¤ï¸</div>
+                    </div>
+                    <div class="stat-number">1,234</div>
+                    <div class="stat-label">Likes & follows combined</div>
+                    <div class="stat-change">â†— +18% from last month</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%;"></div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Score Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Portfolio Score</div>
+                        <div class="card-icon" style="background: #dcfce7; color: #16a34a;">â­</div>
+                    </div>
+                    <div class="stat-number">8.7/10</div>
+                    <div class="stat-label">Based on completeness & quality</div>
+                    <div class="stat-change">â†— Excellent standing</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 87%;"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Profile Section -->
-            <div class="profile-section">
-                <div class="profile-header">
-                    <div class="avatar">JS</div>
-                    <div class="profile-info">
-                        <h2>Dr. Jane Smith</h2>
-                        <p>Research Scientist â€¢ AI & ML</p>
+            <!-- Public Content & Quick Actions Grid -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                <!-- Published Content -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Published Portfolio</div>
+                        <button class="btn btn-primary">+ Add Content</button>
                     </div>
+                    <ul class="content-list">
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Machine Learning Applications in Healthcare</h4>
+                                <div class="content-meta">Research Paper â€¢ 1,247 views â€¢ 89 likes</div>
+                            </div>
+                            <span class="badge badge-public">PUBLIC</span>
+                        </li>
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Data Analysis Framework for Social Sciences</h4>
+                                <div class="content-meta">Technical Guide â€¢ 892 views â€¢ 56 likes</div>
+                            </div>
+                            <span class="badge badge-public">PUBLIC</span>
+                        </li>
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Quantum Computing: A Comprehensive Overview</h4>
+                                <div class="content-meta">Review Article â€¢ 654 views â€¢ 42 likes</div>
+                            </div>
+                            <span class="badge badge-public">PUBLIC</span>
+                        </li>
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Climate Change Impact Study Methodology</h4>
+                                <div class="content-meta">Research Notes â€¢ 423 views â€¢ 31 likes</div>
+                            </div>
+                            <span class="badge badge-public">PUBLIC</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="profile-stats">
-                    <div class="stat">
-                        <div class="stat-number">24</div>
-                        <div class="stat-label">Papers</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">1.2K</div>
-                        <div class="stat-label">Views</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">186</div>
-                        <div class="stat-label">Followers</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">$2.4K</div>
-                        <div class="stat-label">Earned</div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Tab Navigation -->
-            <div class="tab-nav">
-                <div class="tab active">Portfolio</div>
-                <div class="tab">Premium</div>
-                <div class="tab">About</div>
-            </div>
-
-            <!-- Portfolio Grid -->
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="item-header">
-                        <div>
-                            <div class="item-title">Neural Networks in Healthcare</div>
-                            <div class="item-meta">Research Paper â€¢ Mar 2024</div>
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-title" style="margin-bottom: 20px;">Quick Actions</div>
+                    <div class="quick-actions">
+                        <div class="action-card" onclick="alert('Upload new research paper')">
+                            <div class="action-icon">ðŸ“„</div>
+                            <div class="action-title">Upload Paper</div>
                         </div>
-                        <div class="price-tag free">Free</div>
-                    </div>
-                    <div class="item-description">
-                        Exploring deep learning applications in medical diagnosis and patient care optimization.
-                    </div>
-                    <div class="item-tags">
-                        <span class="tag">AI</span>
-                        <span class="tag">Healthcare</span>
-                        <span class="tag">ML</span>
-                    </div>
-                    <div class="item-stats">
-                        <span>ðŸ‘ 324 views</span>
-                        <span>â¬‡ï¸ 89 downloads</span>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="item-header">
-                        <div>
-                            <div class="item-title">Advanced ML Algorithms Guide</div>
-                            <div class="item-meta">Technical Notes â€¢ Feb 2024</div>
+                        <div class="action-card" onclick="alert('Edit your profile')">
+                            <div class="action-icon">âœï¸</div>
+                            <div class="action-title">Edit Profile</div>
                         </div>
-                        <div class="price-tag">$12.99</div>
-                    </div>
-                    <div class="item-description">
-                        Comprehensive guide to modern machine learning algorithms with practical implementations.
-                    </div>
-                    <div class="item-tags">
-                        <span class="tag">Machine Learning</span>
-                        <span class="tag">Tutorial</span>
-                    </div>
-                    <div class="item-stats">
-                        <span>ðŸ‘ 567 views</span>
-                        <span>ðŸ›’ 23 purchases</span>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="item-header">
-                        <div>
-                            <div class="item-title">Data Science Project Framework</div>
-                            <div class="item-meta">Project Template â€¢ Jan 2024</div>
+                        <div class="action-card" onclick="alert('Share portfolio link')">
+                            <div class="action-icon">ðŸ”—</div>
+                            <div class="action-title">Share Profile</div>
                         </div>
-                        <div class="price-tag">$8.99</div>
-                    </div>
-                    <div class="item-description">
-                        Complete framework for structuring data science projects from start to deployment.
-                    </div>
-                    <div class="item-tags">
-                        <span class="tag">Data Science</span>
-                        <span class="tag">Template</span>
-                    </div>
-                    <div class="item-stats">
-                        <span>ðŸ‘ 412 views</span>
-                        <span>ðŸ›’ 15 purchases</span>
+                        <div class="action-card" onclick="alert('View analytics')">
+                            <div class="action-icon">ðŸ“ˆ</div>
+                            <div class="action-title">Analytics</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Navigation -->
-            <div class="bottom-nav">
-                <div class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-label">Home</div>
+            <!-- Analytics Chart -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-title">Weekly Profile Activity</div>
+                <div class="chart-container">
+                    <div class="chart-bar" style="height: 45%;">
+                        <div class="chart-label">Mon</div>
+                    </div>
+                    <div class="chart-bar" style="height: 70%;">
+                        <div class="chart-label">Tue</div>
+                    </div>
+                    <div class="chart-bar" style="height: 55%;">
+                        <div class="chart-label">Wed</div>
+                    </div>
+                    <div class="chart-bar" style="height: 85%;">
+                        <div class="chart-label">Thu</div>
+                    </div>
+                    <div class="chart-bar" style="height: 90%;">
+                        <div class="chart-label">Fri</div>
+                    </div>
+                    <div class="chart-bar" style="height: 40%;">
+                        <div class="chart-label">Sat</div>
+                    </div>
+                    <div class="chart-bar" style="height: 35%;">
+                        <div class="chart-label">Sun</div>
+                    </div>
                 </div>
-                <div class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-label">Discover</div>
+            </div>
+        </div>
+
+        <!-- Monetization Dashboard -->
+        <div id="monetization-dashboard" class="dashboard-content">
+            <div class="dashboard-grid">
+                <!-- Total Revenue Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Total Revenue</div>
+                        <div class="card-icon" style="background: #dcfce7; color: #16a34a;">ðŸ’µ</div>
+                    </div>
+                    <div class="stat-number">$1,847</div>
+                    <div class="stat-label">Earned this month</div>
+                    <div class="stat-change">â†— +34% from last month</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
                 </div>
-                <div class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-label">Create</div>
+
+                <!-- Sales Count Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Total Sales</div>
+                        <div class="card-icon" style="background: #dbeafe; color: #2563eb;">ðŸ›’</div>
+                    </div>
+                    <div class="stat-number">47</div>
+                    <div class="stat-label">Content purchases this month</div>
+                    <div class="stat-change">â†— +15% from last month</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%;"></div>
+                    </div>
                 </div>
-                <div class="nav-item active">
-                    <div class="nav-icon"></div>
-                    <div class="nav-label">Profile</div>
+
+                <!-- Average Price Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Avg. Sale Price</div>
+                        <div class="card-icon" style="background: #fef3c7; color: #d97706;">ðŸ’°</div>
+                    </div>
+                    <div class="stat-number">$39.29</div>
+                    <div class="stat-label">Per content item sold</div>
+                    <div class="stat-change">â†— +8% from last month</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%;"></div>
+                    </div>
                 </div>
-                <div class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-label">Settings</div>
+            </div>
+
+            <!-- Monetized Content & Transactions Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Monetized Content -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Monetized Content</div>
+                        <button class="btn btn-primary">+ List Content</button>
+                    </div>
+                    <ul class="content-list">
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Advanced ML Algorithms - Full Course</h4>
+                                <div class="content-meta">12 sales this month</div>
+                            </div>
+                            <div>
+                                <div class="price-tag">$49.99</div>
+                                <span class="badge badge-monetized">ACTIVE</span>
+                            </div>
+                        </li>
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Data Science Project Templates</h4>
+                                <div class="content-meta">8 sales this month</div>
+                            </div>
+                            <div>
+                                <div class="price-tag">$29.99</div>
+                                <span class="badge badge-monetized">ACTIVE</span>
+                            </div>
+                        </li>
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Research Methodology Toolkit</h4>
+                                <div class="content-meta">15 sales this month</div>
+                            </div>
+                            <div>
+                                <div class="price-tag">$39.99</div>
+                                <span class="badge badge-monetized">ACTIVE</span>
+                            </div>
+                        </li>
+                        <li class="content-item">
+                            <div class="content-info">
+                                <h4>Statistical Analysis Cheat Sheets</h4>
+                                <div class="content-meta">6 sales this month</div>
+                            </div>
+                            <div>
+                                <div class="price-tag">$19.99</div>
+                                <span class="badge badge-monetized">ACTIVE</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Recent Transactions</div>
+                        <button class="btn btn-secondary">View All</button>
+                    </div>
+                    <div>
+                        <div class="transaction-item">
+                            <div class="transaction-details">
+                                <div class="transaction-title">Advanced ML Algorithms - Full Course</div>
+                                <div class="transaction-date">2 hours ago</div>
+                            </div>
+                            <div class="transaction-amount">+$49.99</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="transaction-details">
+                                <div class="transaction-title">Research Methodology Toolkit</div>
+                                <div class="transaction-date">5 hours ago</div>
+                            </div>
+                            <div class="transaction-amount">+$39.99</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="transaction-details">
+                                <div class="transaction-title">Data Science Project Templates</div>
+                                <div class="transaction-date">1 day ago</div>
+                            </div>
+                            <div class="transaction-amount">+$29.99</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="transaction-details">
+                                <div class="transaction-title">Advanced ML Algorithms - Full Course</div>
+                                <div class="transaction-date">1 day ago</div>
+                            </div>
+                            <div class="transaction-amount">+$49.99</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="transaction-details">
+                                <div class="transaction-title">Statistical Analysis Cheat Sheets</div>
+                                <div class="transaction-date">2 days ago</div>
+                            </div>
+                            <div class="transaction-amount">+$19.99</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue Chart -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-title">Monthly Revenue Overview</div>
+                <div class="chart-container">
+                    <div class="chart-bar" style="height: 40%;">
+                        <div class="chart-label">Jan</div>
+                    </div>
+                    <div class="chart-bar" style="height: 55%;">
+                        <div class="chart-label">Feb</div>
+                    </div>
+                    <div class="chart-bar" style="height: 48%;">
+                        <div class="chart-label">Mar</div>
+                    </div>
+                    <div class="chart-bar" style="height: 65%;">
+                        <div class="chart-label">Apr</div>
+                    </div>
+                    <div class="chart-bar" style="height: 75%;">
+                        <div class="chart-label">May</div>
+                    </div>
+                    <div class="chart-bar" style="height: 90%;">
+                        <div class="chart-label">Jun</div>
+                    </div>
+                    <div class="chart-bar" style="height: 85%;">
+                        <div class="chart-label">Jul</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings Breakdown -->
+            <div class="dashboard-grid" style="margin-top: 20px;">
+                <div class="card">
+                    <div class="card-title" style="margin-bottom: 20px;">Top Performing Content</div>
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 14px; color: #333;">Advanced ML Algorithms</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #2C5F2D;">$599.88</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 14px; color: #333;">Research Methodology</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #2C5F2D;">$479.85</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 72%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 14px; color: #333;">Data Science Templates</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #2C5F2D;">$299.92</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="margin-bottom: 20px;">Payout Summary</div>
+                    <div style="padding: 20px; background: #f9fafb; border-radius: 10px; margin-bottom: 15px;">
+                        <div style="font-size: 14px; color: #888; margin-bottom: 5px;">Available Balance</div>
+                        <div style="font-size: 32px; font-weight: bold; color: #22c55e;">$1,847.23</div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="alert('Withdraw funds to your bank account')">
+                        Withdraw Funds
+                    </button>
+                    <div style="margin-top: 15px; padding: 15px; background: #fef3c7; border-radius: 8px;">
+                        <div style="font-size: 13px; color: #92400e;">
+                            ðŸ’¡ <strong>Tip:</strong> Next payout scheduled for end of month
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="margin-bottom: 20px;">Quick Stats</div>
+                    <div style="display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666;">Conversion Rate</span>
+                        <span style="font-weight: bold; color: #2C5F2D;">3.2%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666;">Avg. Time to Sale</span>
+                        <span style="font-weight: bold; color: #2C5F2D;">4.5 days</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span style="color: #666;">Total Downloads</span>
+                        <span style="font-weight: bold; color: #2C5F2D;">127</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 15px 0;">
+                        <span style="color: #666;">Customer Rating</span>
+                        <span style="font-weight: bold; color: #2C5F2D;">4.8/5.0 â­</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function showDashboard(type) {
+            // Hide all dashboards
+            document.querySelectorAll('.dashboard-content').forEach(dash => {
+                dash.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected dashboard
+            if (type === 'portfolio') {
+                document.getElementById('portfolio-dashboard').classList.add('active');
+                document.querySelectorAll('.toggle-btn')[0].classList.add('active');
+            } else {
+                document.getElementById('monetization-dashboard').classList.add('active');
+                document.querySelectorAll('.toggle-btn')[1].classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
