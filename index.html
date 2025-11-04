@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inklr – Dual Dashboard Demo</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
+  <title>Inklr - Dual Dashboard</title>
   <style>
     * {
       margin: 0;
@@ -128,7 +124,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
+      font-weight: bold;
     }
     .stat-number {
       font-size: 36px;
@@ -158,11 +155,35 @@
       background: linear-gradient(90deg, #2c5f2d 0%, #1e4620 100%);
       transition: width 0.3s ease;
     }
+    .chart-container {
+      height: 200px;
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 10px;
+    }
+    .chart-bar {
+      flex: 1;
+      background: linear-gradient(180deg, #2c5f2d 0%, #1e4620 100%);
+      border-radius: 5px 5px 0 0;
+      position: relative;
+    }
+    .chart-label {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: #888;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <div class="logo">Inklr</div>
       <div class="user-info">
@@ -171,62 +192,62 @@
       </div>
     </div>
 
-    <!-- Dashboard Toggle -->
     <div class="dashboard-toggle">
       <button class="toggle-btn active" onclick="showDashboard('portfolio')">
-        📊 Public Portfolio
+        Public Portfolio
       </button>
       <button class="toggle-btn" onclick="showDashboard('monetization')">
-        💰 Monetization Hub
+        Monetization Hub
       </button>
     </div>
 
-    <!-- Public Portfolio -->
+    <!-- Portfolio Dashboard -->
     <div id="portfolio-dashboard" class="dashboard-content active">
       <div class="dashboard-grid">
         <div class="card">
           <div class="card-header">
             <div class="card-title">Profile Views</div>
-            <div class="card-icon" style="background:#dbeafe; color:#2563eb;">
-              👁️
-            </div>
+            <div class="card-icon" style="background:#dbeafe; color:#2563eb;">PV</div>
           </div>
           <div class="stat-number">2,847</div>
           <div class="stat-label">Total views this month</div>
-          <div class="stat-change">⬆ +23% from last month</div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:75%;"></div>
-          </div>
+          <div class="stat-change">+23% from last month</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div>
         </div>
 
         <div class="card">
           <div class="card-header">
             <div class="card-title">Engagement</div>
-            <div class="card-icon" style="background:#fef3c7; color:#d97706;">
-              ❤️
-            </div>
+            <div class="card-icon" style="background:#fef3c7; color:#d97706;">EN</div>
           </div>
           <div class="stat-number">1,234</div>
           <div class="stat-label">Likes & follows combined</div>
-          <div class="stat-change">⬆ +18% from last month</div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:60%;"></div>
-          </div>
+          <div class="stat-change">+18% from last month</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:60%;"></div></div>
         </div>
 
         <div class="card">
           <div class="card-header">
             <div class="card-title">Portfolio Score</div>
-            <div class="card-icon" style="background:#dcfce7; color:#16a34a;">
-              ⭐
-            </div>
+            <div class="card-icon" style="background:#dcfce7; color:#16a34a;">PS</div>
           </div>
           <div class="stat-number">8.7/10</div>
           <div class="stat-label">Based on completeness & quality</div>
-          <div class="stat-change">⬆ Excellent standing</div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:87%;"></div>
-          </div>
+          <div class="stat-change">Excellent standing</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:87%;"></div></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-title">Weekly Profile Activity</div>
+        <div class="chart-container">
+          <div class="chart-bar" style="height:45%;"><div class="chart-label">Mon</div></div>
+          <div class="chart-bar" style="height:70%;"><div class="chart-label">Tue</div></div>
+          <div class="chart-bar" style="height:55%;"><div class="chart-label">Wed</div></div>
+          <div class="chart-bar" style="height:85%;"><div class="chart-label">Thu</div></div>
+          <div class="chart-bar" style="height:90%;"><div class="chart-label">Fri</div></div>
+          <div class="chart-bar" style="height:40%;"><div class="chart-label">Sat</div></div>
+          <div class="chart-bar" style="height:35%;"><div class="chart-label">Sun</div></div>
         </div>
       </div>
     </div>
@@ -237,16 +258,34 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Total Revenue</div>
-            <div class="card-icon" style="background:#dcfce7; color:#16a34a;">
-              💵
-            </div>
+            <div class="card-icon" style="background:#dcfce7; color:#16a34a;">TR</div>
           </div>
           <div class="stat-number">$1,847</div>
           <div class="stat-label">Earned this month</div>
-          <div class="stat-change">⬆ +34% from last month</div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width:80%;"></div>
+          <div class="stat-change">+34% from last month</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Total Sales</div>
+            <div class="card-icon" style="background:#dbeafe; color:#2563eb;">TS</div>
           </div>
+          <div class="stat-number">47</div>
+          <div class="stat-label">Content purchases this month</div>
+          <div class="stat-change">+15% from last month</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:65%;"></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Average Sale Price</div>
+            <div class="card-icon" style="background:#fef3c7; color:#d97706;">AP</div>
+          </div>
+          <div class="stat-number">$39.29</div>
+          <div class="stat-label">Per content item sold</div>
+          <div class="stat-change">+8% from last month</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:70%;"></div></div>
         </div>
       </div>
     </div>
@@ -254,23 +293,18 @@
 
   <script>
     function showDashboard(type) {
-      document.querySelectorAll(".dashboard-content").forEach((dash) => {
-        dash.classList.remove("active");
-      });
-      document.querySelectorAll(".toggle-btn").forEach((btn) => {
-        btn.classList.remove("active");
-      });
+      document.querySelectorAll(".dashboard-content").forEach(d => d.classList.remove("active"));
+      document.querySelectorAll(".toggle-btn").forEach(b => b.classList.remove("active"));
       if (type === "portfolio") {
         document.getElementById("portfolio-dashboard").classList.add("active");
         document.querySelectorAll(".toggle-btn")[0].classList.add("active");
       } else {
-        document
-          .getElementById("monetization-dashboard")
-          .classList.add("active");
+        document.getElementById("monetization-dashboard").classList.add("active");
         document.querySelectorAll(".toggle-btn")[1].classList.add("active");
       }
     }
   </script>
 </body>
 </html>
+
 
